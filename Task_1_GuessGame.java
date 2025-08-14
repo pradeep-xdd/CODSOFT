@@ -7,8 +7,7 @@ public class Task_1_GuessGame {
         Scanner sc = new Scanner(System.in);
         Random r = new Random();
         
-        int low = 1;
-        int high = 100;
+        int low = 1,high=100;
         int maxAttempts = 7;
         int score = 0;
         int round = 1;
