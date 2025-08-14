@@ -1,66 +1,62 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class GuessGame {
+public class Task_1_GuessGame {
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Random r = new Random();
         
-        int low = 1, high = 100, maxGuesses = 5;
-        int gamesPlayed = 0, wins = 0, totalGuesses = 0;
-        String choice = "y";
+        int low = 1;
+        int high = 100;
+        int maxAttempts = 7;
+        int score = 0;
+        int round = 1;
         
-        System.out.println("Number Guessing Game");
-        System.out.println("Guess the number between " + low + " and " + high);
+        System.out.println("Welcome to the Number Guessing Game!\n");
+        boolean playAgain = true;
         
-        while (choice.equals("y")) {
-            int number = r.nextInt(high) + 1;
-            int guesses = 0;
-            boolean correct = false;
-            gamesPlayed++;
+        while (playAgain) {
+            int targetNumber = r.nextInt(high)+1;
+            System.out.print("Round "+round);
+            round++;
+            System.out.println(" - Range 1 To 100");
+            System.out.println("You have " + maxAttempts + " attempts.\n");
             
-            System.out.println("\nGame " + gamesPlayed + " - I've picked a number!");
+            int attempts = 0;
+            boolean correctguess = false;
             
-            while (guesses < maxGuesses && !correct) {
-                System.out.print("Your guess: ");
-                int guess = sc.nextInt();
-                guesses++;
+            while (attempts < maxAttempts) {
+                System.out.print("Enter your guess: ");
+                int userGuess = sc.nextInt();
                 
-                if (guess == number) {
-                    System.out.println("Right! Got it in " + guesses + " tries");
-                    correct = true;
-                    wins++;
-                    totalGuesses += guesses;
-                } else if (guess < number) {
-                    System.out.println(" Low Guess! The Number Is Higher");
+                attempts++;
+                
+                if (userGuess == targetNumber) {
+                    System.out.printf("Correct! You guessed the number in %d attempts.\n", attempts);
+                    score += attempts;
+                    correctguess = true;
+                    break;
+                } else if (userGuess < targetNumber) {
+                    System.out.println("Too low! Try again.\n");
                 } else {
-                    System.out.println("High Guess! The Number Is Lower");
-                }
-                
-                if (!correct && guesses < maxGuesses) {
-                    System.out.println("Tries left: " + (maxGuesses - guesses));
+                    System.out.println("Too high! Try again.\n");
                 }
             }
             
-            if (!correct) {
-                System.out.println("No more tries! It was " + number);
+            if (!correctguess) {
+                System.out.println("Sorry, you've used all your attempts. The correct number was " + targetNumber);
             }
             
-            System.out.println("Score: " + wins + "/" + gamesPlayed);
-            if (wins > 0) {
-                System.out.println("Avg guesses: " + (totalGuesses / wins));
-            }
+            System.out.println("Your current score: " + score + "\n");
             
-            System.out.print("Play again? (y/n): ");
-            choice = sc.next();
+            System.out.print("Do you want to play another round? (yes/no): ");
+            String playAgainResponse = sc.next().toLowerCase();
+            if (!playAgainResponse.equals("yes")) {
+                playAgain = false;
+            }
         }
         
-        System.out.println("\nFinal stats:");
-        System.out.println("Games: " + gamesPlayed + ", Won: " + wins);
-        if (gamesPlayed > 0) {
-            System.out.println("Win rate: " + (wins * 100 / gamesPlayed) + "%");
-        }
-        
-        sc.close();
+        System.out.println("Thank you for playing! Your final score: " + score);
     }
 }
