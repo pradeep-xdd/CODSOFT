@@ -20,7 +20,7 @@ public class Task_2_GradeCalculator {
         char grade;
         if (average >= 90) {
             grade = 'A';
-        } else if (averag >= 80) {
+        } else if (average >= 80) {
             grade = 'B';
         } else if (average >= 70) {
             grade = 'C';
